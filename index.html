@@ -2,16 +2,28 @@
 <html>
 <head><script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script></head>
 
-
-
 <body>
 
+<script>
+d3.csv("DOC_Visitor_Arrests.csv", 
+	function(arrests){
+
+	return {
+		year: new Date (arrests.Year) ,
+		arrests: +arrests.Arrests
+	};   
+},
+
+function(error, rows){
 
 
+	console.log(rows);
+}
 
-This is d3
 
+);
 
+</script>
 
 
 </body>
