@@ -4,8 +4,14 @@
 
 <body>
 
+<div class="chart">
+
+
+
+
 <script>
-d3.csv("DOC_Visitor_Arrests.csv", 
+
+var arrests = d3.csv("DOC_Visitor_Arrests.csv", 
 	function(arrests){
 
 	return {
@@ -20,8 +26,58 @@ function(error, rows){
 	console.log(rows);
 }
 
-
 );
+
+
+var barWidth = arrests.length
+
+
+var width = 1000; 
+var height = 500;
+var margin= { top: 30, right: 30, bottom: 40, left: 40};
+ 
+var chart = d3.select("body")
+	.append("svg") //svg 
+	.attr("width", width + margin.left + margin.right)
+	.attr("height", height + margin.top + margin.bottom);
+
+
+
+var x = d3.scale.ordinal()
+.rangeRoundBands([ 0, width], .1);
+
+
+var y = d3.scale.linear()
+.range([height, 0]);
+
+var xAxis = d3.svg.axis()
+.scale(x)
+.orient("bottom");
+
+
+var yAxis = d3.svg.axis()
+.scale(y)
+.orient("left")
+.ticks(10, "&")
+
+
+chart.selectAll('.rect')
+	.data(arrests)
+	.enter()
+	.append('rect')
+	.attr ('x', function(d,i){
+		return i * barWidth;
+	})
+	.attr('y', function(d) {
+		return h - d.value;
+	})
+	.attr('width', barWidth)
+	.attr('height', function(d){
+	return d.value;
+	})
+
+	.attr('fill', 'blue');
+
 
 </script>
 
