@@ -1,40 +1,31 @@
 <!DOCTYPE html>
+
 <html>
-<head><script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script></head>
+
+<head>
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+
+</head>
+
+
+
 
 <body>
 
-<div class="chart">
+
+
 
 
 
 
 <script>
 
-var arrests = d3.csv("DOC_Visitor_Arrests.csv", 
-	function(arrests){
 
-	return {
-		year: new Date (arrests.Year) ,
-		arrests: +arrests.Arrests
-	};   
-},
-
-function(error, rows){
-
-
-	console.log(rows);
-}
-
-);
-
-
-var barWidth = arrests.length
-
-
-var width = 1000; 
-var height = 500;
 var margin= { top: 30, right: 30, bottom: 40, left: 40};
+var width = 890; 
+var height = 430;
  
 var chart = d3.select("body")
 	.append("svg") //svg 
@@ -58,7 +49,36 @@ var xAxis = d3.svg.axis()
 var yAxis = d3.svg.axis()
 .scale(y)
 .orient("left")
-.ticks(10, "&")
+.ticks(10)
+
+
+var svg = d3.select("body").append("svg")
+.attr("width" , width+margin.left+margin.right)
+.attr("height", height+margin.top+margin.bottom)
+.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+d3.csv("DOC_Visitor_Arrests.csv", 
+	function(info){
+
+	return {
+		year: new Date (info.Year) ,
+		arrests: +info.Arrests
+	};   
+},
+
+	function(error, rows){
+			
+			console.log(rows);
+}
+
+);
+
+
+
+
 
 
 chart.selectAll('.rect')
